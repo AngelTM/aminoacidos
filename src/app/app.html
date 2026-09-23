@@ -1,0 +1,87 @@
+<header>
+  <div class="lang-switch" role="group" [attr.aria-label]="t().language">
+    @for (l of languages; track l.code) {
+      <button
+        type="button"
+        [class.active]="lang() === l.code"
+        [attr.aria-pressed]="lang() === l.code"
+        [attr.lang]="l.code"
+        (click)="setLang(l.code)"
+      >
+        {{ l.label }}
+      </button>
+    }
+  </div>
+
+  <h1>{{ t().title }}</h1>
+  <p class="subtitle">{{ t().subtitle }}</p>
+
+  <div class="controls">
+    <div class="levels" role="group" [attr.aria-label]="t().difficulty">
+      @for (level of levels; track level.pairs) {
+        <button
+          type="button"
+          [class.active]="pairs() === level.pairs"
+          (click)="setLevel(level.pairs)"
+        >
+          {{ t().levels[level.key] }} ({{ level.pairs }})
+        </button>
+      }
+    </div>
+
+    <label class="toggle">
+      <input type="checkbox" [checked]="showCodes()" (change)="showCodes.set(!showCodes())" />
+      {{ t().showCodes }}
+    </label>
+
+    <button type="button" class="restart" (click)="newGame()">{{ t().newGame }}</button>
+  </div>
+
+  <div class="stats">
+    <span>{{ t().moves }}: <strong>{{ moves() }}</strong></span>
+    <span>{{ t().pairs }}: <strong>{{ matchedPairs() }} / {{ pairs() }}</strong></span>
+    <span>{{ t().time }}: <strong>{{ time() }}</strong></span>
+  </div>
+</header>
+
+<main class="board" [class.hard]="pairs() > 10">
+  @for (card of cards(); track card.uid) {
+    <button
+      type="button"
+      class="card"
+      [class.flipped]="card.flipped || card.matched"
+      [class.matched]="card.matched"
+      [attr.aria-label]="card.flipped || card.matched ? (card.kind === 'name' ? acidName(card.acid) : t().structureOf(acidName(card.acid))) : t().hiddenCard"
+      (click)="flip(card)"
+    >
+      <span class="inner">
+        <span class="face back">?</span>
+        <span class="face front" [class.image]="card.kind === 'image'">
+          @if (card.kind === 'name') {
+            <span class="name">{{ acidName(card.acid) }}</span>
+            @if (showCodes()) {
+              <span class="codes">{{ card.acid.threeLetter }} · {{ card.acid.oneLetter }}</span>
+            }
+          } @else {
+            <img [src]="imageSrc(card.acid)" [alt]="t().structureOf(acidName(card.acid))" draggable="false" />
+            @if (card.matched) {
+              <span class="caption">{{ acidName(card.acid) }}</span>
+            }
+          }
+        </span>
+      </span>
+    </button>
+  }
+</main>
+
+@if (won()) {
+  <div class="overlay">
+    <div class="dialog">
+      <h2>{{ t().wonTitle }}</h2>
+      <p>{{ t().wonSummary(pairs(), moves(), time()) }}</p>
+      <button type="button" class="restart" (click)="newGame()">{{ t().playAgain }}</button>
+    </div>
+  </div>
+}
+
+<footer>{{ t().footer }}</footer>
