@@ -1,59 +1,56 @@
-# Memorama
+# Memorama de Aminoácidos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+Juego de memoria hecho con Angular: encuentra los pares entre el **nombre** de cada aminoácido y la **imagen de su estructura molecular**.
 
-## Development server
+- 3 niveles: Fácil (6 pares), Medio (10) y Difícil (los 20 aminoácidos estándar).
+- Contador de movimientos, pares encontrados y tiempo.
+- Opción para mostrar u ocultar los códigos de 3 y 1 letra (Trp · W).
+- Disponible en español e inglés.
 
-To start a local development server, run:
+## Requisitos
 
-```bash
-ng serve
-```
+- [Node.js](https://nodejs.org/) 20.19 o más reciente (también sirve 22.12+ o 24+).
+- npm (viene incluido con Node.js).
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Para comprobar tu versión:
 
 ```bash
-ng generate component component-name
+node -v
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Cómo ejecutarlo
 
-```bash
-ng generate --help
-```
+1. Clona el repositorio y entra a la carpeta:
 
-## Building
+   ```bash
+   git clone https://github.com/AngelTM/aminoacidos.git
+   cd aminoacidos
+   ```
 
-To build the project run:
+2. Instala las dependencias (solo la primera vez):
 
-```bash
-ng build
-```
+   ```bash
+   npm install
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. Inicia el juego:
 
-## Running unit tests
+   ```bash
+   npm start
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+4. Abre **http://localhost:4200** en tu navegador.
 
-```bash
-ng test
-```
+Para detenerlo, presiona `Ctrl + C` en la terminal.
 
-## Running end-to-end tests
+## Otros comandos
 
-For end-to-end (e2e) testing, run:
+| Comando         | Qué hace                                                     |
+| --------------- | ------------------------------------------------------------ |
+| `npm test`      | Ejecuta las pruebas.                                         |
+| `npm run build` | Genera la versión para producción en `dist/memorama/browser`. |
+| `npm run deploy`| Publica el juego en Firebase Hosting (requiere `firebase login`). |
 
-```bash
-ng e2e
-```
+## Créditos
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Las imágenes de las estructuras moleculares provienen de [PubChem](https://pubchem.ncbi.nlm.nih.gov/) (NCBI).
